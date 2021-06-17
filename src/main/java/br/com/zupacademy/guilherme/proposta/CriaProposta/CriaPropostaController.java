@@ -27,6 +27,7 @@ public class CriaPropostaController {
 		return proposta.toString();
 
 	}
+	
  
 	
 }

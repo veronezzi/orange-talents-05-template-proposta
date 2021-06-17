@@ -21,7 +21,7 @@ public class CriaPropostaController {
 	
 	@PostMapping
 	@Transactional
-	public String cadastrarPropostaTeste(@RequestBody @Valid PropostaForm form) {
+	public String cadastrarProposta(@RequestBody @Valid PropostaForm form) {
 		Proposta proposta = form.toModel();
 		manager.persist(proposta);
 		return proposta.toString();

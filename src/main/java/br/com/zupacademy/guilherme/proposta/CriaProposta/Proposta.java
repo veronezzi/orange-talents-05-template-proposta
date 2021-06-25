@@ -2,16 +2,23 @@ package br.com.zupacademy.guilherme.proposta.CriaProposta;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.zupacademy.guilherme.proposta.cartao.Cartao;
 import br.com.zupacademy.guilherme.proposta.validacao.ValidadorDeCpfCnpj;
 
 @Entity
@@ -37,6 +44,9 @@ public class Proposta {
 
 	@Enumerated(EnumType.STRING)
 	private StatusProposta status;
+
+	@OneToOne
+	private Cartao cartao;
 
 	public Proposta(@NotNull @ValidadorDeCpfCnpj String documento, @Email @NotBlank String email, @NotNull String nome,
 			@NotNull @NotNull String endereco, @NotNull BigDecimal salario) {
@@ -81,5 +91,38 @@ public class Proposta {
 	public void setStatus(StatusProposta status) {
 		this.status = status;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public BigDecimal getSalario() {
+		return salario;
+	}
+
+	public void setSalario(BigDecimal salario) {
+		this.salario = salario;
+	}
+
+	public void setCartao(Cartao cartao) {
+		this.cartao = cartao;
+	}
+
+	@Deprecated
+    public Proposta() {
+    }
+	
 
 }

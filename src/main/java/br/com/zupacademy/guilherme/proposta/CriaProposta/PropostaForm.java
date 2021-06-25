@@ -37,7 +37,7 @@ public class PropostaForm {
 	}
 
 	public Proposta toModel() {
-		return new Proposta(this.documento, this.email, this.endereco, this.nome, this.salario);
+		return new Proposta(this.documento, this.email, this.nome, this.endereco, this.salario);
 	}
 
 }

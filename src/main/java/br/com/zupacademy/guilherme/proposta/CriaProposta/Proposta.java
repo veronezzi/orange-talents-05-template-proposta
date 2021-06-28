@@ -119,6 +119,10 @@ public class Proposta {
 	public void setCartao(Cartao cartao) {
 		this.cartao = cartao;
 	}
+	
+	public StatusProposta getStatus() {
+		return status;
+	}
 
 	@Deprecated
     public Proposta() {

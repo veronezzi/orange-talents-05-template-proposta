@@ -1,48 +1,48 @@
 version: '3'
-services: 
- mysql:
-  image: mysql
-  networks:
-    - production-networks
-  environment:
-    MYSQL_DATABASE: proposta
-    MYSQL_ROOT_PASSWORD: Guilherme1@
-  ports:
-    - '3307:3306'
- analise:
-  image: 'zupacademy/analise-financeira'
-  environment:
-    SERVER_PORT: 9999
-    URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
-  ports:
-    - '9999:9999'
- contas:
-  image: 'zupacademy/contas'
-  environment:
-    SERVER_PORT: 8888
-  ports:
-    - '8888:8888'
+services:
 
- propostas-api:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - volume-mysql:/var/lib/mysql
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_DATABASE: proposta
+      MYSQL_ROOT_PASSWORD: Guilherme1@
+
+  analise:
+    image: 'zupacademy/analise-financeira'
+    environment:
+      SERVER_PORT: 9999
+      URL_SISTEMA_CARTAO: http://contas:8888/api/cartoes
+    ports:
+      - '9999:9999'
+
+  contas:
+    image: 'zupacademy/contas'
+    environment:
+      SERVER_PORT: 8888
+    ports:
+      - '8888:8888'
+
+  propostas-api:
     build:
       dockerfile: Dockerfile
       context: .
-    restart: always
-    environment:
-      DB_HOST: "jdbc:mysql://mysql:3306/proposta"
-      DB_PASSWORD: Guilherme1@
-      API_CARTOES_URL: http://contas:8888
-      API_ANALISE_FINANCEIRA_URL: http://analise:9999
+    restart: on-failure
     ports:
       - '8080:8080'
-    networks:
-      - production-networks
     depends_on:
       - mysql
       - analise
       - contas
-networks:
-  production-networks:
-    driver: bridge
+    environment:
+      DB_HOST: jdbc:mysql://host.docker.internal:3306/proposta?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: Guilherme1@
+      API_CARTOES_URL: http://contas:8888
+      API_ANALISE_FINANCEIRA_URL: http://analise:9999
+
 volumes:
-  mysql-volume: 
+  volume-mysql:

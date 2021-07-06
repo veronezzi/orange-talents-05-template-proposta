@@ -1,6 +1,7 @@
 package br.com.zupacademy.guilherme.proposta.CriaProposta;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
 
 import br.com.zupacademy.guilherme.proposta.cartao.Cartao;
 import br.com.zupacademy.guilherme.proposta.validacao.ValidadorDeCpfCnpj;
@@ -47,6 +49,8 @@ public class Proposta {
 
 	@OneToOne
 	private Cartao cartao;
+	
+	
 
 	public Proposta(@NotNull @ValidadorDeCpfCnpj String documento, @Email @NotBlank String email, @NotNull String nome,
 			@NotNull @NotNull String endereco, @NotNull BigDecimal salario) {
